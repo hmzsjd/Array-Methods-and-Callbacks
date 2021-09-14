@@ -70,11 +70,18 @@ Use the higher-order function getWinners to do the following:
 
 
 // dont worry about overtime, compare home team to away team goals.
-function getWinners(/* code here */) {
-    /* code here */
+function getWinners(arr, getFinalsCB) {
+    const winners = getFinalsCB(arr).map(function(item) {
+        if(item["Home Team Goals"] > item["Away Team Goals"]) {
+            return item["Home Team Name"];
+        } else if (item["Home Team Goals"] < item["Away Team Goals"]) {
+            return item["Away Team Name"];
+        } else {
+            return "tie";
+        }
+    });
+    return winners;
 }
-
-
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use the higher-order function getWinnersByYear to do the following:
@@ -88,9 +95,16 @@ hint: the strings returned need to exactly match the string in step 4.
 
 // HINT: use map() with item(to grab winner) and index(to grab year) arguments. 
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(arr, getYearsCB, getWinnersCB) {
+
+    return getYearsCB(arr, getFinals).map(function (item, index){
+        return `In ${item}, ${getWinnersCB(arr, getFinals)[index]} won the world cup!`
+    })
+    
 }
+
+console.log("RESULTS");
+console.log(getWinnersByYear(fifaData, getYears, getWinners));
 
 
 
